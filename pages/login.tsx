@@ -1,4 +1,10 @@
-import { SyncOutlined } from "@ant-design/icons";
+import {
+  SyncOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  MailOutlined,
+} from "@ant-design/icons";
+import { Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -13,39 +19,42 @@ const Login = () => {
     <div>
       <h1 className="jumbotron text-center bg-primary square">Login</h1>
 
-      <div className="container col-md-4 offset-md-4 pb-5">
+      <div className="container col-md-3 offset-md-4 pb-5">
         <form>
-          <input
+          <Input
             type="email"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
             required
+            suffix={<MailOutlined />}
           />
-
-          <input
+          <Input.Password
             type="password"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2 col-md-4"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
             required
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
           />
 
           <button
             type="submit"
-            className="btn btn-block btn-primary"
+            className="btn btn-primary btn-submit "
             disabled={!email || !password || loading}
           >
-            {loading ? <SyncOutlined spin /> : "Submit"}
+            {loading ? <SyncOutlined spin /> : "Login"}
           </button>
         </form>
 
-        <p className="text-center p-3">
+        <p className="text-center p-3 ">
           Not yet registered?{" "}
           <Link href="/register">
-            <a>Register</a>
+            <a className="text-color">Register</a>
           </Link>
         </p>
         <p className="text-center">

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-
-import { SyncOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+import {
+  SyncOutlined,
+  UserOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  MailOutlined,
+} from "@ant-design/icons";
 import Link from "next/link";
 
 import { useRouter } from "next/router";
@@ -18,45 +24,48 @@ const register = () => {
 
       <div className="container col-md-4 offset-md-4 pb-5">
         <form>
-          <input
+          <Input
             type="text"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2 "
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter name"
             required
+            suffix={<UserOutlined />}
           />
-
-          <input
+          <Input
             type="email"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
             required
+            suffix={<MailOutlined />}
           />
-
-          <input
+          <Input.Password
             type="password"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2 col-md-4"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
             required
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
           />
 
           <button
             type="submit"
-            className="btn btn-block btn-primary"
+            className="btn btn-primary btn-submit"
             disabled={!name || !email || !password || loading}
           >
-            {loading ? <SyncOutlined spin /> : "Submit"}
+            {loading ? <SyncOutlined spin /> : "Register"}
           </button>
         </form>{" "}
-        <p className="text-center p-3">
+        <p className="text-center p-3 ">
           Already registered?{" "}
           <Link href="/login">
-            <a>Login</a>
+            <a className="text-color">Login</a>
           </Link>
         </p>
       </div>
