@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-
-import { SyncOutlined } from "@ant-design/icons";
+import React, { FormEvent, useContext, useState } from "react";
+import axios from "axios";
+import { Input } from "antd";
+import {
+  SyncOutlined,
+  UserOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  MailOutlined,
+} from "@ant-design/icons";
+import { toast } from "react-toastify";
 import Link from "next/link";
-
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
+import { Context } from "../context";
 
 const register = () => {
   const [name, setName] = useState("");
@@ -11,52 +19,83 @@ const register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
+  // state
+  const {
+    state: { user },
+    dispatch,
+  } = useContext(Context);
+
+  const router: NextRouter = useRouter();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.table({ name, email, password });
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`/api/register`, {
+        name,
+        email,
+        password,
+      });
+      console.log(data);
+      toast.success("Registration successful. Please login.");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setLoading(false);
+    } catch (err: any) {
+      toast.error(err.response.data);
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <h1 className="jumbotron text-center bg-primary square">Register</h1>
 
       <div className="container col-md-4 offset-md-4 pb-5">
-        <form>
-          <input
+        <form onSubmit={handleSubmit}>
+          <Input
             type="text"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2 "
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter name"
             required
+            suffix={<UserOutlined />}
           />
-
-          <input
+          <Input
             type="email"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
             required
+            suffix={<MailOutlined />}
           />
-
-          <input
+          <Input.Password
             type="password"
-            className="form-control mb-4 p-4"
+            className="form-control mb-2 p-2 col-md-4"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
             required
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
           />
 
           <button
             type="submit"
-            className="btn btn-block btn-primary"
+            className="btn btn-primary btn-submit"
             disabled={!name || !email || !password || loading}
           >
-            {loading ? <SyncOutlined spin /> : "Submit"}
+            {loading ? <SyncOutlined spin /> : "Register"}
           </button>
         </form>{" "}
-        <p className="text-center p-3">
+        <p className="text-center p-3 ">
           Already registered?{" "}
           <Link href="/login">
-            <a>Login</a>
+            <a className="text-color">Login</a>
           </Link>
         </p>
       </div>
