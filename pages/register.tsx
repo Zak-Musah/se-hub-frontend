@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
+import axios from "axios";
 import { Input } from "antd";
 import {
   SyncOutlined,
@@ -7,9 +8,10 @@ import {
   EyeTwoTone,
   MailOutlined,
 } from "@ant-design/icons";
+import { toast } from "react-toastify";
 import Link from "next/link";
-
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
+import { Context } from "../context";
 
 const register = () => {
   const [name, setName] = useState("");
@@ -17,13 +19,41 @@ const register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
+  // state
+  const {
+    state: { user },
+    dispatch,
+  } = useContext(Context);
+
+  const router: NextRouter = useRouter();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.table({ name, email, password });
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`/api/register`, {
+        name,
+        email,
+        password,
+      });
+      console.log(data);
+      toast.success("Registration successful. Please login.");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setLoading(false);
+    } catch (err: any) {
+      toast.error(err.response.data);
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <h1 className="jumbotron text-center bg-primary square">Register</h1>
 
       <div className="container col-md-4 offset-md-4 pb-5">
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             type="text"
             className="form-control mb-2 p-2 "
