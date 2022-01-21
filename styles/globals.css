@@ -16,6 +16,7 @@ a {
 }
 :root {
   --primary-color: rgb(127, 214, 255);
+  --background-color: #f0f2f5;
 }
 .square {
   border-radius: 0px;
@@ -48,4 +49,24 @@ a {
 
 .text-color {
   color: var(--primary-color);
+}
+
+.coaching {
+  background-color: var(--background-color);
+  height: 100vh; /*Placeholder*/
+}
+
+.forums {
+  background-color: var(--background-color);
+  height: 100vh; /*Placeholder*/
+}
+
+.local-content {
+  background-color: var(--background-color);
+  height: 100vh; /*Placeholder*/
+}
+
+.contact {
+  background-color: var(--background-color);
+  height: 100vh; /*Placeholder*/
 }

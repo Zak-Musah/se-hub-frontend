@@ -1,4 +1,4 @@
-import { Menu } from "antd";
+import { Menu, Tabs, Typography } from "antd";
 import Link from "next/link";
 import {
   AppstoreOutlined,
@@ -14,7 +14,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const { Item, SubMenu, ItemGroup } = Menu;
-
+const { TabPane } = Tabs;
+const { Title } = Typography;
 const TopNav = () => {
   const [current, setCurrent] = useState("");
   const { state, dispatch } = useContext(Context);
@@ -35,13 +36,9 @@ const TopNav = () => {
   };
   return (
     <Menu mode="horizontal" selectedKeys={[current]}>
-      <Item
-        onClick={(e) => setCurrent(e.key)}
-        key="/"
-        icon={<AppstoreOutlined />}
-      >
+      <Item onClick={(e) => setCurrent(e.key)} key="/">
         <Link href="/">
-          <a>SE-HUB </a>
+          <Title level={3}>SE HUB</Title>
         </Link>
       </Item>
       {user === null && (
@@ -50,22 +47,36 @@ const TopNav = () => {
             onClick={(e) => setCurrent(e.key)}
             key="/login"
             icon={<LoginOutlined />}
+            className="ms-auto"
           >
             <Link href="/login">
               <a> Login </a>
             </Link>
           </Item>
-          <Item
-            onClick={(e) => setCurrent(e.key)}
-            key="/register"
-            icon={<UserAddOutlined />}
-          >
-            <Link href="/register">
-              <a> Register </a>
-            </Link>
-          </Item>
         </>
       )}
+
+      <Item onClick={(e) => setCurrent(e.key)} key="/forums">
+        <Link href="/forums">
+          <a> Forums </a>
+        </Link>
+      </Item>
+      <Item onClick={(e) => setCurrent(e.key)} key="/coaching">
+        <Link href="/coaching">
+          <a> Coaching </a>
+        </Link>
+      </Item>
+      <Item onClick={(e) => setCurrent(e.key)} key="/local-content">
+        <Link href="/local-content">
+          <a>Local Content </a>
+        </Link>
+      </Item>
+      <Item onClick={(e) => setCurrent(e.key)} key="/contact-page">
+        <Link href="/contact">
+          <a> Contact Us </a>
+        </Link>
+      </Item>
+
       {user !== null && (
         <>
           <SubMenu icon={<CoffeeOutlined />} title={"Zak"} className="ms-auto">

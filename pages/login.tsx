@@ -5,10 +5,10 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import { Input } from "antd";
+import { Input, Button } from "antd";
 import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Context } from "../context";
 import axios from "axios";
 
@@ -75,14 +75,14 @@ const Login = () => {
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
           />
-
-          <button
-            type="submit"
-            className="btn btn-primary btn-submit "
+          <Button
+            className="btn-submit "
+            type="primary"
             disabled={!email || !password || loading}
+            htmlType="submit"
           >
             {loading ? <SyncOutlined spin /> : "Login"}
-          </button>
+          </Button>
         </form>
 
         <p className="text-center p-3 ">
