@@ -1,6 +1,6 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import {
   SyncOutlined,
   UserOutlined,
@@ -13,7 +13,7 @@ import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { Context } from "../context";
 
-const register = () => {
+const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,10 +26,12 @@ const register = () => {
   } = useContext(Context);
 
   const router: NextRouter = useRouter();
-
+  useEffect(() => {
+    // getData()
+  }, []);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.table({ name, email, password });
+    console.log({ name, email, password });
     try {
       setLoading(true);
       const { data } = await axios.post(`/api/register`, {
@@ -43,16 +45,19 @@ const register = () => {
       setEmail("");
       setPassword("");
       setLoading(false);
+      router.push("/login");
     } catch (err: any) {
       toast.error(err.response.data);
       setLoading(false);
     }
   };
   return (
-    <div>
-      <h1 className="jumbotron text-center bg-primary square">Register</h1>
-
-      <div className="container col-md-4 offset-md-4 pb-5">
+    <div
+      style={{ background: "#f0f2f5", marginTop: "-3rem" }}
+      className="container col-md-8 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded"
+    >
+      <h1 className=" text-center mt-3 ">Register</h1>
+      <div className=" col-md-10 col-sm-5  ">
         <form onSubmit={handleSubmit}>
           <Input
             type="text"
@@ -84,15 +89,16 @@ const register = () => {
             }
           />
 
-          <button
-            type="submit"
-            className="btn btn-primary btn-submit"
+          <Button
+            type="primary"
+            className="float-end"
             disabled={!name || !email || !password || loading}
+            htmlType="submit"
           >
             {loading ? <SyncOutlined spin /> : "Register"}
-          </button>
+          </Button>
         </form>{" "}
-        <p className="text-center p-3 ">
+        <p className="text-center p-3 text-color">
           Already registered?{" "}
           <Link href="/login">
             <a className="text-color">Login</a>
@@ -103,4 +109,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

@@ -11,8 +11,11 @@ import { NextRouter, useRouter } from "next/router";
 import { FormEvent, useContext, useState } from "react";
 import { Context } from "../context";
 import axios from "axios";
+import styles from "../styles/Login.module.css";
+import { NextPage } from "next";
+import { userInfo } from "../types";
 
-const Login = () => {
+const Login: NextPage = () => {
   const [email, setEmail] = useState("zak@gmail.com");
   const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
@@ -26,14 +29,13 @@ const Login = () => {
   const router: NextRouter = useRouter();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.table({ name, email, password });
     try {
       setLoading(true);
-      const { data } = await axios.post(`/api/login`, {
+      const { data } = await axios.post<userInfo>(`/api/login`, {
         email,
         password,
       });
-      // console.log("LOGIN RESPONSE", data);
+
       dispatch({
         type: "LOGIN",
         payload: data,
@@ -48,12 +50,13 @@ const Login = () => {
       setLoading(false);
     }
   };
-
   return (
-    <div>
-      <h1 className="jumbotron text-center bg-primary square">Login</h1>
-
-      <div className="container col-md-3 offset-md-4 pb-5">
+    <div
+      style={{ background: "#f0f2f5", marginTop: "-3rem" }}
+      className="container col-md-8 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded"
+    >
+      <h1 className="text-center mt-3">Login</h1>
+      <div className="col-md-10 col-sm-5">
         <form onSubmit={handleSubmit}>
           <Input
             type="email"
@@ -76,7 +79,7 @@ const Login = () => {
             }
           />
           <Button
-            className="btn-submit "
+            className={styles.btnLoginPage}
             type="primary"
             disabled={!email || !password || loading}
             htmlType="submit"
@@ -85,13 +88,13 @@ const Login = () => {
           </Button>
         </form>
 
-        <p className="text-center p-3 ">
+        <p className="text-center p-3 mt-4">
           Not yet registered?{" "}
           <Link href="/register">
             <a className="text-color">Register</a>
           </Link>
         </p>
-        <p className="text-center">
+        <p className="text-center mt-2">
           <Link href="/forgot-password">
             <a className="text-danger">Forgot password</a>
           </Link>
