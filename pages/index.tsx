@@ -17,8 +17,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className={styles.main}>
-        <div className="container  py-5">
-          <div className="row mt-4 ml-n2 py-5">
+        <div className="container  py-5 mt-5">
+          <div className="row mt-4 mt-5 py-5">
             <div className="col-lg-7 pt-5 text-center">
               <h1 className="pt-5">
                 Information Hub for Formal and Informal Business and
@@ -29,53 +29,6 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
-      {/* <section className={styles.new}>
-        <div className="container py-5">
-          <div className="row pt-5  ">
-            <div className="col-lg-7">
-              <div className="row text-center">
-                <div className="col-lg-3">
-                  <Image
-                    className="image-fluid"
-                    width={240}
-                    height={240}
-                    src={Forum}
-                    alt="Forums Image"
-                  ></Image>
-                  <h6>Forums</h6>
-                </div>
-                <div className="col-lg-3">
-                  <Image
-                    className="image-fluid"
-                    width={240}
-                    height={240}
-                    src={CoachingImage}
-                    alt="Bussiness Image"
-                  ></Image>
-                </div>
-                <div className="col-lg-3">
-                  <Image
-                    className="image-fluid"
-                    width={240}
-                    height={240}
-                    src={EduMaterials}
-                    alt="Bussiness Image"
-                  ></Image>
-                </div>
-                <div className="col-lg-3">
-                  <Image
-                    className="image-fluid"
-                    width={240}
-                    height={240}
-                    src={BussinessImage}
-                    alt="Bussiness Image"
-                  ></Image>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };
