@@ -1,0 +1,33 @@
+.container {
+  /* padding: 0 2rem; */
+  margin-top: -66px;
+  margin-bottom: 66px;
+  width: 100vw;
+  /* background-color: var(--background-color); */
+  height: 100vh; /*Placeholder*/
+}
+
+.main {
+  background: url(../public/images/landing.png) no-repeat;
+  background-size: cover;
+  height: 100vh;
+  background-position: 50% 50%;
+  width: 100%;
+}
+
+.main h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.btnInfo {
+  height: 45px;
+  width: 35%;
+  border: 1px solid var(--background-color);
+  color: var(--background-color);
+  outline: none;
+  background-color: var(--primary-color);
+  font-weight: 700;
+  border-radius: 60px;
+  margin-top: 3px;
+}

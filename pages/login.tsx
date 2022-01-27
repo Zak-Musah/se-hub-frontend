@@ -11,7 +11,7 @@ import { NextRouter, useRouter } from "next/router";
 import { FormEvent, useContext, useState } from "react";
 import { Context } from "../context";
 import axios from "axios";
-import styles from "../styles/Login.module.css";
+import styles from "../styles/Login.module.scss";
 import { NextPage } from "next";
 import { userInfo } from "../types";
 

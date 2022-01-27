@@ -1,0 +1,11 @@
+.btnLoginPage,
+.btnLoginPage:focus,
+.btnLoginPage:active {
+  background-color: var(--primary-color);
+  border: none;
+  float: right;
+}
+
+.btnLoginPage:focus {
+  border: none;
+}
