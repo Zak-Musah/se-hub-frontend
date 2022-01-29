@@ -40,7 +40,7 @@ const TopNav = () => {
     <nav className="container-fluid">
       <div className="fw-bold">
         <Link href="/">
-          <h3 id="logo">WIDU</h3>
+          <h3 id="logo">HUB</h3>
         </Link>
       </div>
 
@@ -50,7 +50,7 @@ const TopNav = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Search"
+              placeholder="Search Business"
             ></input>
             <SearchOutlined className="fa fa-search" />
           </div>
@@ -65,22 +65,9 @@ const TopNav = () => {
       <ul className="menu">
         {navItems.map((item, idx) => (
           <li key={item.name}>
-            <label htmlFor={`drop-${idx + 1}`} className="toggle">
-              {item.name}
-            </label>
             <Link href={`${item.path}`}>
               <a>{item.name}</a>
             </Link>
-            <input type="checkbox" id={`drop-${idx + 1}`}></input>
-            <ul>
-              {item.menuItems.map((menuItem) => (
-                <li key={menuItem}>
-                  <Link href={`${item.path}`}>
-                    <a>{menuItem}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </li>
         ))}
 
@@ -92,7 +79,7 @@ const TopNav = () => {
               type="primary"
               href="/login"
             >
-              Login
+              Sign in
             </Button>
           </>
         )}

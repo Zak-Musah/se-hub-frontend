@@ -69,10 +69,10 @@ h1 {
   font-family: "roboto", sans-serif;
 }
 
-#container {
-  margin: 0 auto;
-  max-width: 890px;
-}
+// #container {
+//   margin: 0 auto;
+//   max-width: 890px;
+// }
 
 p {
   text-align: center;
@@ -126,8 +126,8 @@ nav a {
   display: block;
   padding: 0 20px;
   color: black;
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 60px;
   text-decoration: none;
 }
