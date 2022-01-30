@@ -1,17 +1,26 @@
 import { Button } from "antd";
+import Modal from "antd/lib/modal/Modal";
 import Head from "next/head";
 import React, { useContext, useState } from "react";
 import BusinessDetails from "../components/Business/BusinessDetais";
+import GetBusinessDetails from "../components/Business/GetBusinessDetails";
 import { Context } from "../context";
 import styles from "../styles/business.module.scss";
 function LocalBusiness() {
   const [businessName, setBusinessName] = useState("Proto-farms");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   // state
   const {
     state: { user },
     dispatch,
   } = useContext(Context);
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   const getShowBusinessDetails = (item: string) => {
     setBusinessName(item);
   };
@@ -31,7 +40,11 @@ function LocalBusiness() {
           <h1>Local Business</h1>
           <div>
             {!user ? "Add your business" : ""}
-            <Button className="m-2 rounded" type="primary">
+            <Button
+              onClick={() => setIsModalVisible((p) => !p)}
+              className="m-2 rounded"
+              type="primary"
+            >
               {user ? "+ Create" : "Sign in"}
             </Button>
           </div>
@@ -81,6 +94,15 @@ function LocalBusiness() {
             <BusinessDetails title={businessName} />
           </div>
         </div>
+        <Modal
+          title="Please Provide your business details"
+          visible={isModalVisible}
+          onOk={() => handleOk()}
+          onCancel={() => handleCancel()}
+          width={1000}
+        >
+          <GetBusinessDetails />
+        </Modal>
       </div>
     </div>
   );
