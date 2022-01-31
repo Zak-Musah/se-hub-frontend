@@ -24,8 +24,31 @@
     margin-top: 30px;
     gap: 80px;
   }
+  .details {
+    display: flex;
+    flex-direction: row;
+    font-size: 50px;
+  }
+
+  /*Small pixels*/
+  @media screen and (max-width: 576px) {
+  }
 }
 
-.details {
-  display: flex;
+/* Compiles to: */
+@media (min-width: 453px) and (max-width: 840px) {
+  .details {
+    display: flex;
+    flex-direction: column;
+    color: red;
+    &Description {
+      width: 100% !important;
+    }
+    &Contact {
+      width: 100% !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 850px) {
 }
