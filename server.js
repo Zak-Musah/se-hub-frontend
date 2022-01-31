@@ -15,7 +15,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: "https://se-hub-backend.herokuapp.com",
+          target: "http://localhost:8000",
           changeOrigin: true,
         }),
       );
@@ -27,7 +27,7 @@ app
 
     server.listen(2000, (err) => {
       if (err) throw err;
-      console.log("> Ready on https://se-hub-backend.herokuapp.com");
+      console.log("> Ready on http://localhost:8000");
     });
   })
   .catch((err) => {

@@ -292,3 +292,9 @@ li > a:only-child:after {
   width: 1.5em;
   height: 1.5em;
 }
+
+/* Ant form styles*/
+
+.ant-form-item-label {
+  text-align: start !important;
+}
