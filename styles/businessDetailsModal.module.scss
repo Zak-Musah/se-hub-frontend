@@ -1,0 +1,8 @@
+.uploadBtn {
+  width: -webkit-fill-available;
+  height: 32px;
+  border-color: var(--primary-color) !important;
+  &hover {
+    background-color: var(--primary-color) !important;
+  }
+}

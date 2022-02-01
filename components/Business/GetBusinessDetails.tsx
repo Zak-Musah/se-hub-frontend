@@ -1,23 +1,9 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Upload,
-  Space,
-} from "antd";
+import { Form, Input, Button, Space } from "antd";
 import Resizer from "react-image-file-resizer";
-
+import styles from "../../styles/businessDetailsModal.module.scss";
 type SizeType = Parameters<typeof Form>[0]["size"];
 import {
-  UploadOutlined,
   InboxOutlined,
   MinusCircleOutlined,
   PlusOutlined,
@@ -28,13 +14,13 @@ import { toast } from "react-toastify";
 const imgs = {
   businessLogo: "",
   artifacts: [],
-  users: [],
+  owners: [],
 };
 const GetBusinessDetails = () => {
   const [componentSize, setComponentSize] = useState<SizeType | "default">(
     "default",
   );
-  const [uploadedImage, setUPloadedImage] = useState("Uploaded Image");
+
   const [images, setImages] = useState(imgs);
 
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
@@ -42,45 +28,57 @@ const GetBusinessDetails = () => {
   };
 
   const normFile = (e: any, imageKey: string) => {
-    console.log("Upload event:", e.target.files[0], imageKey);
+    const files = e.target.files;
+    [...files].map((file) => {
+      Resizer.imageFileResizer(
+        file,
+        720,
+        500,
+        "JPEG",
+        100,
+        0,
+        async (uri) => {
+          try {
+            let { data } = await axios.post("/api/business/upload-image", {
+              image: uri,
+            });
 
-    const file = e.target.files[0];
-    Resizer.imageFileResizer(
-      file,
-      720,
-      500,
-      "JPEG",
-      100,
-      0,
-      async (uri) => {
-        try {
-          let { data } = await axios.post("/api/business/upload-image", {
-            image: uri,
-          });
-          console.log("image uploaded to s3", data);
-          console.log("business logo key", imageKey);
-          console.log("Object to update", images);
-
-          setImages((images) => ({ ...images, [imageKey]: data }));
-          console.log("expecting data to be assigned to businessLogo", images);
-        } catch (error) {
-          console.log(error);
-          toast("Image upload failed. Try later.");
-        }
-      },
-      "base64",
-      200,
-      200,
-    );
-
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
+            let result = data;
+            if (imageKey === "artifacts" || imageKey === "owners") {
+              result = [...images[imageKey], data];
+            }
+            setImages((images) => ({
+              ...images,
+              [imageKey]: result,
+            }));
+          } catch (error) {
+            console.log(error);
+            toast("Image upload failed. Try later.");
+          }
+        },
+        "base64",
+        200,
+        200,
+      );
+    });
   };
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
-    console.log(images);
+  const onFinish = async (values) => {
+    values.artifacts = images.artifacts;
+    values.businessLogo = images.businessLogo;
+    values.owners.map((owner, idx) => {
+      owner.avatar = images.owners[idx];
+    });
+    console.log(values);
+    try {
+      const { data } = await axios.post("api/business", {
+        ...values,
+      });
+      console.log(data);
+      toast("Great business data saved to backend");
+      // TODO Close dialog
+    } catch (error) {
+      if (error) toast(error.response.data);
+    }
   };
 
   return (
@@ -96,43 +94,45 @@ const GetBusinessDetails = () => {
       <Form.Item label="Business name" name="name" rules={[{ required: true }]}>
         <Input placeholder="Input Business Name" />
       </Form.Item>
-      <Form.Item
-        name="businessLogo"
-        label="Upload Business Logo"
-        // valuePropName="BusinessLogo"
-        // getValueFromEvent={normFile}
-      >
-        {/* <Upload name="logo" action="/upload.do" listType="picture">
-          <Button icon={<UploadOutlined />}>Click to upload</Button>
-        </Upload> */}
-        <input
-          name="businessLogo"
-          type="file"
-          onChange={(e) => normFile(e, "businessLogo")}
-        />
+      <Form.Item name="businessLogo" label="Upload Business Logo">
+        <label className={`text-left btn btn-block ${styles.uploadBtn}`}>
+          Image Upload
+          <input
+            name="businessLogo"
+            type="file"
+            onChange={(e) => normFile(e, "businessLogo")}
+            hidden
+            accept="image/*"
+          />
+        </label>
       </Form.Item>
 
       <Form.Item label="Other media upload">
-        <Form.Item
-          name="artifacts"
-          valuePropName="artifacts"
-          getValueFromEvent={normFile}
-          noStyle
-        >
-          <Upload.Dragger name="files" action="/upload.do">
+        <Form.Item name="artifacts">
+          <label className={`text-left btn btn-block ${styles.uploadBtn}`}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload. Support for a single
+                or bulk upload.
+              </p>
             </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
-            <p className="ant-upload-hint">
-              Support for a single or bulk upload.
-            </p>
-          </Upload.Dragger>
+            <input
+              name="artifacts"
+              type="file"
+              onChange={(e) => normFile(e, "artifacts")}
+              hidden
+              accept="image/*"
+              multiple
+            />
+          </label>
         </Form.Item>
       </Form.Item>
-      <Form.Item label="Description">
+      <Form.Item
+        rules={[{ required: true }]}
+        name="description"
+        label="Description"
+      >
         <Input.TextArea showCount maxLength={100} />
       </Form.Item>
 
@@ -167,64 +167,74 @@ const GetBusinessDetails = () => {
           <Input placeholder="Input address" />
         </Form.Item>
       </Form.Item>
-      <Form.Item>
-        {/* <h3>Owners</h3> */}
-        <Form.List name="users">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Space
-                  key={key}
-                  style={{ display: "flex", marginBottom: 8 }}
-                  align="baseline"
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, "Name"]}
-                    rules={[{ required: true, message: "Missing first name" }]}
+      <Form.Item label="Owners" style={{ marginTop: 10 }}>
+        <Form.Item>
+          <Form.List name="owners">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{ display: "flex", marginBottom: 8 }}
+                    align="baseline"
                   >
-                    <Input placeholder="Full name" />
-                  </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, "Name"]}
+                      rules={[
+                        { required: true, message: "Missing first name" },
+                      ]}
+                    >
+                      <Input placeholder="Full name" />
+                    </Form.Item>
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, "title"]}
-                    rules={[{ required: true, message: "Missing title" }]}
+                    <Form.Item
+                      {...restField}
+                      name={[name, "title"]}
+                      rules={[{ required: true, message: "Missing title" }]}
+                    >
+                      <Input placeholder="Title" />
+                    </Form.Item>
+                    <Form.Item
+                      style={{ marginLeft: 20, marginTop: 20 }}
+                      {...restField}
+                      name={[name, "avatar"]}
+                    >
+                      <label
+                        className={`text-left btn btn-block ${styles.uploadBtn}`}
+                      >
+                        Foto
+                        <input
+                          name="owners"
+                          type="file"
+                          onChange={(e) => normFile(e, "owners")}
+                          hidden
+                          accept="image/*"
+                        />
+                      </label>
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    icon={<PlusOutlined />}
                   >
-                    <Input placeholder="Title" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "avatar"]}
-                    label="Upload Avatar"
-                    valuePropName="avatar"
-                    getValueFromEvent={normFile}
-                  >
-                    <Upload name="logo" action="/upload.do" listType="picture">
-                      <Button icon={<UploadOutlined />}>Click to upload</Button>
-                    </Upload>
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add Owners
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
+                    Add Owners
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+        </Form.Item>
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          Save
         </Button>
       </Form.Item>
     </Form>
