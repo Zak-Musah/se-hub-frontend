@@ -37,7 +37,7 @@ const TopNav = () => {
     router.push("/login");
   };
   return (
-    <nav className="container-fluid">
+    <nav style={{ zIndex: 1020 }} className="container-fluid">
       <div className="fw-bold">
         <Link href="/">
           <h3 id="logo">HUB</h3>
