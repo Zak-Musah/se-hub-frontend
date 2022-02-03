@@ -19,8 +19,8 @@ export interface BusinessInfo {
   phone: string;
   category: string;
   owners: Owner[];
-  businessLogo?: BusinessLogo;
-  artifacts?: BusinessLogo[];
+  businessLogo?: image;
+  artifacts?: image[];
   role: string[];
   creator: string;
   createdAt: Date;
@@ -28,7 +28,7 @@ export interface BusinessInfo {
   v: number;
 }
 
-export interface BusinessLogo {
+export interface image {
   eTag: string;
   location: string;
   businessLogoKey: string;
@@ -43,5 +43,5 @@ export enum Bucket {
 export interface Owner {
   name: string;
   title: string;
-  avatar: BusinessLogo;
+  avatar: image;
 }
