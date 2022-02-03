@@ -6,3 +6,42 @@ export interface userInfo {
   role: string[];
   passwordResetCode: string;
 }
+export interface GetBusinessInfo {
+  data: BusinessInfo[];
+}
+
+export interface BusinessInfo {
+  _id: string;
+  name: string;
+  slug: string;
+  email: string;
+  description: string;
+  phone: string;
+  category: string;
+  owners: Owner[];
+  businessLogo?: BusinessLogo;
+  artifacts?: BusinessLogo[];
+  role: string[];
+  creator: string;
+  createdAt: Date;
+  updatedAt: Date;
+  v: number;
+}
+
+export interface BusinessLogo {
+  eTag: string;
+  location: string;
+  businessLogoKey: string;
+  key: string;
+  bucket: Bucket;
+}
+
+export enum Bucket {
+  SEHub1 = "se-hub-1",
+}
+
+export interface Owner {
+  name: string;
+  title: string;
+  avatar: BusinessLogo;
+}
