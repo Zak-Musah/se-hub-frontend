@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Router, { NextRouter, useRouter } from "next/router";
+import { GetBusinessInfo, Owner } from "../../types";
 
 const imgs = {
   businessLogo: "",
@@ -22,7 +24,8 @@ const GetBusinessDetails = () => {
   );
 
   const [images, setImages] = useState(imgs);
-
+  // router
+  const router: NextRouter = useRouter();
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
     setComponentSize(size);
   };
@@ -65,15 +68,17 @@ const GetBusinessDetails = () => {
   const onFinish = async (values) => {
     values.artifacts = images.artifacts;
     values.businessLogo = images.businessLogo;
-    values.owners.map((owner, idx) => {
-      owner.avatar = images.owners[idx];
-    });
-    console.log(values);
+    if (images.owners.length > 0) {
+      values.owners.map((owner: Owner, idx: number) => {
+        owner.avatar = images.owners[idx];
+      });
+    }
     try {
-      const { data } = await axios.post("api/business", {
+      const { data }: GetBusinessInfo = await axios.post("api/business", {
         ...values,
       });
-      console.log(data);
+
+      router.push("/local-business");
       toast("Great business data saved to backend");
       // TODO Close dialog
     } catch (error) {
@@ -133,7 +138,7 @@ const GetBusinessDetails = () => {
         name="description"
         label="Description"
       >
-        <Input.TextArea showCount maxLength={100} />
+        <Input.TextArea showCount maxLength={1000} />
       </Form.Item>
 
       <Form.Item label="Contact" style={{ marginBottom: 0 }}>
@@ -165,6 +170,17 @@ const GetBusinessDetails = () => {
           }}
         >
           <Input placeholder="Input address" />
+        </Form.Item>
+        <Form.Item
+          name="website"
+          rules={[{ required: true }]}
+          style={{
+            // display: "inline-block"
+            width: "calc(50% - 8px)",
+            margin: "0 8px",
+          }}
+        >
+          <Input placeholder="Input web-address" />
         </Form.Item>
       </Form.Item>
       <Form.Item label="Owners" style={{ marginTop: 10 }}>
