@@ -53,12 +53,10 @@ const BusinessDetails: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
         />
         <h1 className="">{selectedBusiness[0]?.name}</h1>
       </div>
-      <div
-        className={`container-fluid d-flex justify-space-between  ${styles.team}`}
-      >
+      <div className={`container d-flex justify-space-between  ${styles.team}`}>
         {/* <div> */}
         <h1 className={`d-flex ${styles.teamTitle}`}>The TEAM</h1>
-        <div className={`container-fluid d-flex ${styles.teamMemberDetails}`}>
+        <div className={`container d-flex ${styles.teamMemberDetails}`}>
           <MemberDetails owners={selectedBusiness[0]?.owners} />
         </div>
       </div>
@@ -87,6 +85,7 @@ const BusinessDetails: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
         {selectedBusiness[0] &&
           selectedBusiness[0].artifacts?.map((item) => (
             <img
+              className="shadow-sm"
               style={{
                 borderRadius: "10px",
                 margin: "20px",

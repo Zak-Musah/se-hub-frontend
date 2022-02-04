@@ -1,9 +1,11 @@
 import { Card } from "antd";
+import { NextPage } from "next";
 import React from "react";
+import { Owner } from "../../types";
 
 const { Meta } = Card;
 
-const MemberDetails = ({ owners }) => {
+const MemberDetails: NextPage<{ owners: Owner[] }> = ({ owners }) => {
   return (
     <>
       {owners &&

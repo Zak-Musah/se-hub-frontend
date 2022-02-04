@@ -52,7 +52,7 @@ const TopNav = () => {
               className="form-control"
               placeholder="Search Business"
             ></input>
-            <SearchOutlined className="fa fa-search" />
+            {/* <SearchOutlined className="fa fa-search" /> */}
           </div>
         </div>
       </div>
