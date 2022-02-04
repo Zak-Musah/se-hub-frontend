@@ -99,6 +99,13 @@ const GetBusinessDetails = () => {
       <Form.Item label="Business name" name="name" rules={[{ required: true }]}>
         <Input placeholder="Input Business Name" />
       </Form.Item>
+      <Form.Item
+        label="Business category"
+        name="category"
+        rules={[{ required: true }]}
+      >
+        <Input placeholder="Input Business Category" />
+      </Form.Item>
       <Form.Item name="businessLogo" label="Upload Business Logo">
         <label className={`text-left btn btn-block ${styles.uploadBtn}`}>
           Image Upload
