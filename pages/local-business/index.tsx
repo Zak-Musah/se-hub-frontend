@@ -5,9 +5,10 @@ import Head from "next/head";
 import React, { useContext, useEffect, useState } from "react";
 import Business from "../../components/Business/Business";
 import GetBusinessDetails from "../../components/Business/GetBusinessDetails";
+import { style } from "../../components/Business/helpers";
 import { Context } from "../../context";
 import styles from "../../styles/localBusiness.module.scss";
-import { GetBusinessInfo } from "../../types";
+import { GetBusinessInfo, BusinessInfo } from "../../types";
 
 export const getStaticProps = async () => {
   const { data }: GetBusinessInfo = await axios.get(
@@ -20,7 +21,8 @@ export const getStaticProps = async () => {
 
 function LocalBusiness({ businessInfo }: any) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedBusiness, setSelectedBusiness] = useState([{}]);
+  const [selectedTag, setSelectedTag] = useState(false);
+
   // state
   const {
     state: { user },
@@ -62,22 +64,30 @@ function LocalBusiness({ businessInfo }: any) {
         <div className={`shadow-sm ${styles.filter}`}>
           <p className={` ${styles.filterSmall}`}>Filter By Category:</p>
           {businessInfo &&
-            businessInfo.map((business) => (
-              <Button type="primary" className={`${styles.filterBtn}`}>
-                {business?.category}
-              </Button>
+            businessInfo.map((business: BusinessInfo) => (
+              <>
+                <Button
+                  type="primary"
+                  style={style(selectedTag, business?.category)}
+                  className={`${styles.filterBtn}`}
+                  onClick={() => setSelectedTag((p) => !p)}
+                >
+                  {business?.category}
+                </Button>
+              </>
             ))}
 
-          <Button type="primary" className={`${styles.filterBtn}`}>
+          <Button
+            style={style(selectedTag, "IT")}
+            type="primary"
+            className={`${styles.filterBtn}`}
+          >
             IT
           </Button>
         </div>
-
-        <div className="d-flex flex-row">
-          <div className={`d-flex ${styles.businessDetails}`}>
-            <Business selectedBusiness={businessInfo} />
-          </div>
-        </div>
+        <>
+          <Business selectedBusiness={businessInfo} />
+        </>
         <Modal
           title="Please Provide your business details"
           visible={isModalVisible}

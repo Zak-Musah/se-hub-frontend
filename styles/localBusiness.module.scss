@@ -26,13 +26,13 @@
     // float: left;
   }
   &Btn {
-    border-color: var(--primary-color);
-    color: black;
+    // border-color: var(--primary-color);
+
     background-color: var(--background-color);
     display: inline-block;
     font-weight: 400;
     margin-right: 15px;
-    color: #212529;
+
     text-align: center;
     vertical-align: middle;
 
@@ -62,5 +62,5 @@
 
 .businessDetails {
   padding: 0 30px;
-  max-width: 1200px;
+  // max-width: 1200px;
 }
