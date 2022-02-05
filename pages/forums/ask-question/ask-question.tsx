@@ -1,11 +1,22 @@
 import React from "react";
+import { Button } from 'antd';
+import UploadForum from "../upload-forum/upload-forum";
 
-const askQuestion = () => {
+
+const AskQuestion = () => {
   return (
       <div>
-        <h1> Ask Question</h1>
+        <Button type="primary" shape="round" onClick={uploadForm}> Ask Question </Button>
       </div>
     );
   };
   
-  export default askQuestion;
+  export default AskQuestion;
+
+function uploadForm(){
+  return(
+    <div className="container">
+      <UploadForum/>
+    </div>
+  )
+}
