@@ -1,9 +1,10 @@
 import React from "react";
+import AskQuestion from "./ask-question/ask-question";
 
 const Forums = () => {
   return (
     <div className="forums">
-      <h1>Forums page</h1>
+      <AskQuestion/>
     </div>
   );
 };
