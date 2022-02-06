@@ -11,10 +11,16 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import Router, { NextRouter, useRouter } from "next/router";
-import { BusinessInfo, GetBusinessInfo, Owner } from "../../types";
+import {
+  BusinessInfo,
+  GetBusinessInfo,
+  image,
+  imagesObject,
+  Owner,
+} from "../../types";
 
 const imgs = {
-  businessLogo: "",
+  businessLogo: {},
   artifacts: [],
   owners: [],
 };
@@ -48,7 +54,6 @@ const GetBusinessDetails = () => {
               image: uri,
               fileName,
             });
-
             let result = data;
             if (imageKey === "artifacts" || imageKey === "owners") {
               result = [...images[imageKey], data];
@@ -72,20 +77,23 @@ const GetBusinessDetails = () => {
     values.artifacts = images.artifacts;
     values.businessLogo = images.businessLogo;
     if (images.owners.length > 0) {
-      values.owners.map((owner: Owner, idx: number) => {
+      values.owners.map((owner: any, idx: number) => {
         owner.avatar = images.owners[idx];
       });
     }
     try {
-      const { data }: GetBusinessInfo = await axios.post("api/business", {
-        ...values,
-      });
+      const { data }: GetBusinessInfo = await axios.post(
+        "http://localhost:8001/api/business",
+        {
+          ...values,
+        },
+      );
 
       router.push("/local-business");
       toast("Great business data saved to backend");
       // TODO Close dialog
     } catch (error) {
-      if (error) toast(error.response.data);
+      if (error) toast("Data persist to backend fail");
     }
   };
   const handleImageRemoval = async (
@@ -95,14 +103,15 @@ const GetBusinessDetails = () => {
   ) => {
     try {
       let bucket = imageGroup.Bucket;
-      let key = imageGroup.Key;
+      let key = imageGroup.key;
       const res = await axios.post("/api/business/remove-image", {
         bucket,
         key,
       });
       let result = {};
       if (type === "artifacts" || type === "owners") {
-        result = images[type].filter((image) => image.Key !== name);
+        // @ts-ignore
+        result = images[type].filter((image: image) => image.key !== name);
       }
       setImages((images) => ({
         ...images,
@@ -115,7 +124,7 @@ const GetBusinessDetails = () => {
       toast("Image Deletion failed. Try later.");
     }
   };
-
+  console.log(images);
   return (
     <Form
       className={`${styles.antForm}`}
@@ -148,25 +157,16 @@ const GetBusinessDetails = () => {
             accept="image/*"
           />
         </label>
-        {Object.keys(images.businessLogo).length > 0 && (
+        {images.businessLogo && Object.keys(images.businessLogo).length > 0 && (
           <>
-            <div className="d-flex flex-column  mt-3">
-              <Badge
-                title="remove image"
-                count="x"
-                onClick={() =>
-                  handleImageRemoval(
-                    "businessLogo",
-                    images.businessLogo.Key,
-                    images.businessLogo,
-                  )
-                }
-                className="pointer"
-              >
-                <Avatar size={80} src={`${images.businessLogo.Location}`} />
-              </Badge>
-            </div>
-            <span>{images.businessLogo.Key}</span>
+            <Badge
+              className="d-flex flex-column  mt-3 pointer"
+              title="remove image"
+              count="x"
+            >
+              <Avatar size={80} src={`${images.businessLogo.Location}`} />
+            </Badge>
+            <span>{images.businessLogo.key}</span>
           </>
         )}
       </Form.Item>
@@ -192,21 +192,25 @@ const GetBusinessDetails = () => {
           </label>
         </Form.Item>
         <div className="d-flex flex-row mt-4 gap-3">
-          {images.artifacts.length > 0 &&
+          {images.artifacts &&
+            images.artifacts.length > 0 &&
             images.artifacts.map((artifact) => (
-              <div className="d-flex flex-column text-center">
+              <div
+                className="d-flex flex-column text-center"
+                // onClick={() =>
+                //   handleImageRemoval("artifacts", artifact.key, artifact)
+                // }
+                key={artifact.Location}
+              >
                 <Badge
-                  key={artifact.Key}
+                  key={artifact.key}
                   title="remove image"
                   count="x"
-                  onClick={() =>
-                    handleImageRemoval("artifacts", artifact.Key, artifact)
-                  }
                   className="pointer"
                 >
                   <Avatar size={80} src={`${artifact.Location}`} />
                 </Badge>
-                <div>{artifact.Key}</div>
+                <div>{artifact.key}</div>
               </div>
             ))}
         </div>
@@ -324,18 +328,25 @@ const GetBusinessDetails = () => {
             )}
           </Form.List>
           <div className="d-flex flex-row mt-4 gap-3">
-            {images.owners.length > 0 &&
+            {images.owners[0] &&
               images.owners.map((owner) => (
-                <Badge
+                <div
+                  className="d-flex flex-column text-center"
+                  // onClick={() =>
+                  //   handleImageRemoval("owners", owner.avatar.key, owner.avatar)
+                  // }
                   key={owner.Key}
-                  title="remove image"
-                  count="x"
-                  onClick={() => handleImageRemoval("owners", owner.Key, owner)}
-                  className="pointer"
                 >
-                  <Avatar size={80} src={`${owner.Location}`} />
-                  <p>{owner.Key}</p>
-                </Badge>
+                  <Badge
+                    key={owner.Key}
+                    title="remove image"
+                    count="x"
+                    className="pointer"
+                  >
+                    <Avatar size={80} src={`${owner.Location}`} />
+                    <p>{owner.Key}</p>
+                  </Badge>
+                </div>
               ))}
           </div>
         </Form.Item>

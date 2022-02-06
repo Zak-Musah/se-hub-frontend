@@ -13,6 +13,7 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
       {selectedBusiness &&
         selectedBusiness.map((business) => (
           <div
+            key={business.name}
             style={cardBorderTop(business.category)}
             className={`p-3 m-3 rounded-3 shadow ${styles.card}`}
           >
@@ -35,7 +36,7 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
                 }}
                 width={40}
                 height={40}
-                src={business.businessLogo?.location}
+                src={business.businessLogo?.Location}
                 alt="business-logo"
                 className="float-end"
               />
