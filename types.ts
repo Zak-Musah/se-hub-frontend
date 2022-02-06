@@ -17,6 +17,8 @@ export interface BusinessInfo {
   email: string;
   description: string;
   phone: string;
+  website: string;
+  address: string;
   category: string;
   owners: Owner[];
   businessLogo?: image;
@@ -27,10 +29,15 @@ export interface BusinessInfo {
   updatedAt: Date;
   v: number;
 }
+export interface imagesObject {
+  businessLogo: image;
+  artifacts: image[];
+  owners: image[];
+}
 
 export interface image {
   eTag: string;
-  location: string;
+  Location: string;
   businessLogoKey: string;
   key: string;
   bucket: Bucket;
