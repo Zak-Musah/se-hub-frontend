@@ -7,7 +7,7 @@ import axios from "axios";
 
 export const getStaticPaths = async () => {
   const { data }: GetBusinessInfo = await axios.get(
-    "http://localhost:8001/api/business-info",
+    `${process.env.NEXT_PUBLIC_API}/api/business-info`,
   );
 
   const paths = data.map((business) => {
@@ -26,7 +26,7 @@ export const getStaticProps = async ({
   params: { id: string };
 }) => {
   const { data }: GetBusinessInfo = await axios.get(
-    `http://localhost:8001/api/business-info`,
+    `${process.env.NEXT_PUBLIC_API}/api/busines-info`,
   );
   let results = data.filter((item) => item._id === params.id);
   return {

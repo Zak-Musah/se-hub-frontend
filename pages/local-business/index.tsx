@@ -12,7 +12,7 @@ import { GetBusinessInfo, BusinessInfo } from "../../types";
 
 export const getStaticProps = async () => {
   const { data }: GetBusinessInfo = await axios.get(
-    "http://localhost:8001/api/business-info",
+    `${process.env.NEXT_PUBLIC_API}/api/business-info`,
   );
   return {
     props: { businessInfo: data },

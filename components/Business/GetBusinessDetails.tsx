@@ -83,7 +83,7 @@ const GetBusinessDetails = () => {
     }
     try {
       const { data }: GetBusinessInfo = await axios.post(
-        "http://localhost:8001/api/business",
+        `${process.env.NEXT_PUBLIC_API}/api/business`,
         {
           ...values,
         },
