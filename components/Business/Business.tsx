@@ -35,7 +35,7 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
                 }}
                 width={40}
                 height={40}
-                src={business.businessLogo?.Location}
+                src={business.businessLogo?.location}
                 alt="business-logo"
                 className="float-end"
               />
