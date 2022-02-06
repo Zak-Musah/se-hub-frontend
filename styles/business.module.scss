@@ -1,0 +1,19 @@
+.card {
+  width: 360px;
+  height: 240px;
+  border-top: 4px solid var(--primary-color);
+}
+
+.truncate {
+  overflow: hidden;
+  position: relative;
+  line-height: 1.2em;
+  max-height: 6em;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -11,7 +11,7 @@ import { NextRouter, useRouter } from "next/router";
 import { FormEvent, useContext, useState } from "react";
 import { Context } from "../context";
 import axios from "axios";
-import styles from "../styles/Login.module.css";
+import styles from "../styles/Login.module.scss";
 import { NextPage } from "next";
 import { userInfo } from "../types";
 
@@ -52,8 +52,8 @@ const Login: NextPage = () => {
   };
   return (
     <div
-      style={{ background: "#f0f2f5", marginTop: "-3rem" }}
-      className="container col-md-8 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded"
+      style={{ background: "#f0f2f5", marginTop: "140px" }}
+      className="container col-md-4 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded"
     >
       <h1 className="text-center mt-3">Login</h1>
       <div className="col-md-10 col-sm-5">
@@ -84,7 +84,7 @@ const Login: NextPage = () => {
             disabled={!email || !password || loading}
             htmlType="submit"
           >
-            {loading ? <SyncOutlined spin /> : "Login"}
+            {loading ? <SyncOutlined spin /> : "Sign in"}
           </Button>
         </form>
 

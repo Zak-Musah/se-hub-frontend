@@ -53,8 +53,8 @@ const Register = () => {
   };
   return (
     <div
-      style={{ background: "#f0f2f5", marginTop: "-3rem" }}
-      className="container col-md-8 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded"
+      style={{ background: "#f0f2f5", marginTop: "600px" }}
+      className="container col-md-4 col-sm-5 d-flex flex-column align-items-center  pt-3 rounded position-fixed"
     >
       <h1 className=" text-center mt-3 ">Register</h1>
       <div className=" col-md-10 col-sm-5  ">
@@ -101,7 +101,7 @@ const Register = () => {
         <p className="text-center p-3 text-color">
           Already registered?{" "}
           <Link href="/login">
-            <a className="text-color">Login</a>
+            <a className="text-color">Sign in</a>
           </Link>
         </p>
       </div>
