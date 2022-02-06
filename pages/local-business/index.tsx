@@ -46,15 +46,17 @@ function LocalBusiness({ businessInfo }: any) {
 
       <div className={`${styles.main}`}>
         <div
-          className={`d-flex flex-row justify-content-between align-items-center px-4 ${styles.main}`}
+          className={`d-flex flex-row justify-content-between align-items-center  ${styles.main}`}
         >
           <h1>Local Business</h1>
           <div>
             {!user ? "Add your business" : ""}
             <Button
-              onClick={() => setIsModalVisible((p) => !p)}
-              className="m-2 rounded"
-              type="primary"
+              // onClick={() => setIsModalVisible((p) => !p)}
+              // onClick={}
+              href="/local-business/add-business"
+              className=" rounded"
+              type="link"
             >
               {user ? "+ Add your business" : "Sign in"}
             </Button>

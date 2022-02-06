@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Space } from "antd";
+import { Form, Input, Button, Space, Avatar, Badge } from "antd";
 import Resizer from "react-image-file-resizer";
 import styles from "../../styles/businessDetailsModal.module.scss";
 type SizeType = Parameters<typeof Form>[0]["size"];
@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import Router, { NextRouter, useRouter } from "next/router";
-import { GetBusinessInfo, Owner } from "../../types";
+import { BusinessInfo, GetBusinessInfo, Owner } from "../../types";
 
 const imgs = {
   businessLogo: "",
@@ -22,8 +22,8 @@ const GetBusinessDetails = () => {
   const [componentSize, setComponentSize] = useState<SizeType | "default">(
     "default",
   );
-
   const [images, setImages] = useState(imgs);
+
   // router
   const router: NextRouter = useRouter();
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
@@ -33,6 +33,8 @@ const GetBusinessDetails = () => {
   const normFile = (e: any, imageKey: string) => {
     const files = e.target.files;
     [...files].map((file) => {
+      let fileName =
+        file.name.substr(0, file.name.lastIndexOf(".")) || file.name;
       Resizer.imageFileResizer(
         file,
         720,
@@ -44,6 +46,7 @@ const GetBusinessDetails = () => {
           try {
             let { data } = await axios.post("/api/business/upload-image", {
               image: uri,
+              fileName,
             });
 
             let result = data;
@@ -65,7 +68,7 @@ const GetBusinessDetails = () => {
       );
     });
   };
-  const onFinish = async (values) => {
+  const onFinish = async (values: any) => {
     values.artifacts = images.artifacts;
     values.businessLogo = images.businessLogo;
     if (images.owners.length > 0) {
@@ -85,9 +88,37 @@ const GetBusinessDetails = () => {
       if (error) toast(error.response.data);
     }
   };
+  const handleImageRemoval = async (
+    type: string,
+    name: string,
+    imageGroup: any,
+  ) => {
+    try {
+      let bucket = imageGroup.Bucket;
+      let key = imageGroup.Key;
+      const res = await axios.post("/api/business/remove-image", {
+        bucket,
+        key,
+      });
+      let result = {};
+      if (type === "artifacts" || type === "owners") {
+        result = images[type].filter((image) => image.Key !== name);
+      }
+      setImages((images) => ({
+        ...images,
+        [type]: result,
+      }));
+      toast("Image Deletion Successful.");
+    } catch (err) {
+      console.log(err);
+      // setValues({ ...values, loading: false });
+      toast("Image Deletion failed. Try later.");
+    }
+  };
 
   return (
     <Form
+      className={`${styles.antForm}`}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       layout="horizontal"
@@ -107,7 +138,7 @@ const GetBusinessDetails = () => {
         <Input placeholder="Input Business Category" />
       </Form.Item>
       <Form.Item name="businessLogo" label="Upload Business Logo">
-        <label className={`text-left btn btn-block ${styles.uploadBtn}`}>
+        <label className={`text-left btn btn-block  mb-3 ${styles.uploadBtn}`}>
           Image Upload
           <input
             name="businessLogo"
@@ -117,14 +148,35 @@ const GetBusinessDetails = () => {
             accept="image/*"
           />
         </label>
+        {Object.keys(images.businessLogo).length > 0 && (
+          <>
+            <div className="d-flex flex-column  mt-3">
+              <Badge
+                title="remove image"
+                count="x"
+                onClick={() =>
+                  handleImageRemoval(
+                    "businessLogo",
+                    images.businessLogo.Key,
+                    images.businessLogo,
+                  )
+                }
+                className="pointer"
+              >
+                <Avatar size={80} src={`${images.businessLogo.Location}`} />
+              </Badge>
+            </div>
+            <span>{images.businessLogo.Key}</span>
+          </>
+        )}
       </Form.Item>
 
       <Form.Item label="Other media upload">
         <Form.Item name="artifacts">
-          <label className={`text-left btn btn-block ${styles.uploadBtn}`}>
+          <label className={`text-left btn btn-block mb-3 ${styles.uploadBtn}`}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
-              <p className="ant-upload-text">
+              <p className="ant-upload-text m-2">
                 Click or drag file to this area to upload. Support for a single
                 or bulk upload.
               </p>
@@ -139,6 +191,25 @@ const GetBusinessDetails = () => {
             />
           </label>
         </Form.Item>
+        <div className="d-flex flex-row mt-4 gap-3">
+          {images.artifacts.length > 0 &&
+            images.artifacts.map((artifact) => (
+              <div className="d-flex flex-column text-center">
+                <Badge
+                  key={artifact.Key}
+                  title="remove image"
+                  count="x"
+                  onClick={() =>
+                    handleImageRemoval("artifacts", artifact.Key, artifact)
+                  }
+                  className="pointer"
+                >
+                  <Avatar size={80} src={`${artifact.Location}`} />
+                </Badge>
+                <div>{artifact.Key}</div>
+              </div>
+            ))}
+        </div>
       </Form.Item>
       <Form.Item
         rules={[{ required: true }]}
@@ -252,6 +323,21 @@ const GetBusinessDetails = () => {
               </>
             )}
           </Form.List>
+          <div className="d-flex flex-row mt-4 gap-3">
+            {images.owners.length > 0 &&
+              images.owners.map((owner) => (
+                <Badge
+                  key={owner.Key}
+                  title="remove image"
+                  count="x"
+                  onClick={() => handleImageRemoval("owners", owner.Key, owner)}
+                  className="pointer"
+                >
+                  <Avatar size={80} src={`${owner.Location}`} />
+                  <p>{owner.Key}</p>
+                </Badge>
+              ))}
+          </div>
         </Form.Item>
       </Form.Item>
 

@@ -10,7 +10,7 @@ const MemberDetails: NextPage<{ owners: Owner[] }> = ({ owners }) => {
     <>
       {owners &&
         owners.map((owner) => (
-          <div>
+          <div className="d-flex flex-column text-center align-items-center">
             <img
               style={{
                 borderRadius: "50%",
@@ -21,9 +21,9 @@ const MemberDetails: NextPage<{ owners: Owner[] }> = ({ owners }) => {
               width={160}
               height={160}
             />
-            <div>
+            <div className="mt-2">
               <h5 style={{ fontSize: "1rem" }}>{owner.Name}</h5>
-              <h6>{owner.title}</h6>
+              <h6 className="fs-6 fw-light fst-italic">{owner.title}</h6>
             </div>
           </div>
         ))}
