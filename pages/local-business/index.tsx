@@ -52,8 +52,6 @@ function LocalBusiness({ businessInfo }: any) {
           <div>
             {!user ? "Add your business" : ""}
             <Button
-              // onClick={() => setIsModalVisible((p) => !p)}
-              // onClick={}
               href="/local-business/add-business"
               className=" rounded"
               type="link"
