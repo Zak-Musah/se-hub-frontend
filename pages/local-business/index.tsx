@@ -11,9 +11,7 @@ import styles from "../../styles/localBusiness.module.scss";
 import { GetBusinessInfo, BusinessInfo } from "../../types";
 
 export const getStaticProps = async () => {
-  const { data }: GetBusinessInfo = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/api/business-info`,
-  );
+  const { data }: GetBusinessInfo = await axios.get(`/api/business-info`);
   return {
     props: { businessInfo: data },
   };

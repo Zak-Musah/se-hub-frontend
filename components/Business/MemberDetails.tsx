@@ -26,7 +26,7 @@ const MemberDetails: NextPage<{ owners: Owner[] }> = ({ owners }) => {
               height={160}
             />
             <div className="mt-2">
-              <h5 style={{ fontSize: "1rem" }}>{owner.name}</h5>
+              <h5 style={{ fontSize: "1rem" }}>{owner.Name}</h5>
               <h6 className="fs-6 fw-light fst-italic">{owner.title}</h6>
             </div>
           </div>

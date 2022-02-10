@@ -6,9 +6,7 @@ import MemberDetails from "../../components/Business/MemberDetails";
 import axios from "axios";
 
 export const getStaticPaths = async () => {
-  const { data }: GetBusinessInfo = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/api/business-info`,
-  );
+  const { data }: GetBusinessInfo = await axios.get(`/api/business-info`);
 
   const paths = data.map((business) => {
     return {
@@ -25,9 +23,7 @@ export const getStaticProps = async ({
 }: {
   params: { id: string };
 }) => {
-  const { data }: GetBusinessInfo = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/api/busines-info`,
-  );
+  const { data }: GetBusinessInfo = await axios.get(`/api/business-info`);
   let results = data.filter((item) => item._id === params.id);
   return {
     props: { selectedBusiness: results },

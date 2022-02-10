@@ -82,12 +82,9 @@ const GetBusinessDetails = () => {
       });
     }
     try {
-      const { data }: GetBusinessInfo = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/api/business`,
-        {
-          ...values,
-        },
-      );
+      const { data }: GetBusinessInfo = await axios.post(`/api/business`, {
+        ...values,
+      });
 
       router.push("/local-business");
       toast("Great business data saved to backend");

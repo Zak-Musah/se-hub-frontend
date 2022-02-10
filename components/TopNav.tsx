@@ -65,7 +65,7 @@ const TopNav = () => {
       <ul className="menu">
         {navItems.map((item, idx) => (
           <li key={item.name}>
-            <Link href={`${item.path}`}>
+            <Link href={`/${item.path}`}>
               <a>{item.name}</a>
             </Link>
           </li>

@@ -15,7 +15,7 @@ app
       server.use(
         "/api",
         createProxyMiddleware({
-          target: process.env.NEXT_PUBLIC_API,
+          target: "http://localhost:8001",
           changeOrigin: true,
         }),
       );
@@ -25,9 +25,9 @@ app
       return handle(req, res);
     });
 
-    server.listen(2000, (err) => {
+    server.listen(3000, (err) => {
       if (err) throw err;
-      console.log(`> Ready on  ${process.env.NEXT_PUBLIC_API}`);
+      console.log(`> Ready on http://localhost:8001`);
     });
   })
   .catch((err) => {
