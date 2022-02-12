@@ -11,9 +11,11 @@ export const getStaticPaths = async () => {
   );
 
   const paths = data.map((business) => {
-    return {
-      params: { id: business?._id.toString() },
-    };
+    return (
+      {
+        params: { id: business?._id.toString() },
+      } || []
+    );
   });
   return { paths, fallback: false };
 };
