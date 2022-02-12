@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from 'antd';
-import UploadForum from "../upload-forum/upload-forum";
+import UploadForum from "./upload-forum";
 
 
 const AskQuestion = () => {
