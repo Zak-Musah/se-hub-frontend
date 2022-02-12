@@ -29,11 +29,11 @@ const AskQuestion = () => {
       <Modal title="Ask Question" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
       <form {...layout} name="nest-messages">
                 <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-                    <Input />
+                    <Input placeholder= "Enter your title here"/>
                 </Form.Item>
 
                 <Form.Item label="Description" name="description" rules={[{ required: true }]}>
-                    <Input.TextArea/>
+                    <Input.TextArea placeholder= "Enter your question here"/>
                 </Form.Item>
 
             </form>
