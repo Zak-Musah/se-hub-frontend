@@ -50,10 +50,13 @@ const GetBusinessDetails = () => {
         0,
         async (uri) => {
           try {
-            let { data } = await axios.post("/api/business/upload-image", {
-              image: uri,
-              fileName,
-            });
+            let { data } = await axios.post(
+              "http://206.189.59.213/api/business/upload-image",
+              {
+                image: uri,
+                fileName,
+              },
+            );
             let result = data;
             if (imageKey === "artifacts" || imageKey === "owners") {
               result = [...images[imageKey], data];

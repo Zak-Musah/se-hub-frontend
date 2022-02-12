@@ -10,8 +10,10 @@ import { Context } from "../../context";
 import styles from "../../styles/localBusiness.module.scss";
 import { GetBusinessInfo, BusinessInfo } from "../../types";
 
-export const getStaticProps = async () => {
-  const { data }: GetBusinessInfo = await axios.get(`/api/business-info`);
+export const getServerSideProps = async () => {
+  const { data }: GetBusinessInfo = await axios.get(
+    `http://206.189.59.213/api/business-info`,
+  );
   return {
     props: { businessInfo: data },
   };
