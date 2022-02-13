@@ -51,7 +51,7 @@ const GetBusinessDetails = () => {
         async (uri) => {
           try {
             let { data } = await axios.post(
-              "http://206.189.59.213/api/business/upload-image",
+              "http://165.232.126.246/api/business/upload-image",
               {
                 image: uri,
                 fileName,

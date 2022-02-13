@@ -12,7 +12,7 @@ import { GetBusinessInfo, BusinessInfo } from "../../types";
 
 export const getServerSideProps = async () => {
   const { data }: GetBusinessInfo = await axios.get(
-    `http://206.189.59.213/api/business-info`,
+    `http://165.232.126.246/api/business-info`,
   );
   return {
     props: { businessInfo: data },

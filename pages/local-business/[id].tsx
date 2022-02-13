@@ -8,7 +8,7 @@ import { Button } from "antd";
 
 export const getStaticPaths = async () => {
   const { data }: GetBusinessInfo = await axios.get(
-    `http://206.189.59.213/api/business-info`,
+    `http://165.232.126.246/api/business-info`,
   );
 
   const paths = data.map((business) => {
@@ -29,7 +29,7 @@ export const getStaticProps = async ({
   params: { id: string };
 }) => {
   const { data }: GetBusinessInfo = await axios.get(
-    `http://206.189.59.213/api/business-info`,
+    `http://165.232.126.246/api/business-info`,
   );
   let results = data.filter((item) => item._id === params.id);
   return {
