@@ -176,7 +176,7 @@ li > a:only-child:after {
 @media all and (max-width: 768px) {
   #logo {
     display: block;
-    padding: 0;
+    padding-left: 30px;
     width: 100%;
     text-align: center;
     float: none;
@@ -188,10 +188,14 @@ li > a:only-child:after {
 
   .toggle + a,
   .menu {
+    position: relative;
+    // left: 10px;
     display: none;
+    background-color: var(--background-color);
   }
 
   .toggle {
+    position: relative;
     display: block;
     background-color: var(--background-color);
     padding: 0 20px;
@@ -212,6 +216,7 @@ li > a:only-child:after {
 
   nav ul li {
     display: block;
+    background-color: var(--background-color);
     width: 100%;
   }
 
@@ -267,6 +272,11 @@ li > a:only-child:after {
 .search {
   position: relative;
   box-shadow: 0 0 40px rgba(51, 51, 51, 0.1);
+}
+
+.search-icon {
+  position: relative;
+  right: 25px;
 }
 
 .search input {

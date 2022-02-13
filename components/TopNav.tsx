@@ -26,9 +26,6 @@ const TopNav = () => {
     process.browser && setCurrent(window.location.pathname);
   }, [process.browser && window.location.pathname]);
 
-  const navigateToPage = (route: string) => {
-    router.push(`/${route}`);
-  };
   const logout = async () => {
     dispatch({ type: "LOGOUT" });
     window.localStorage.removeItem("user");
@@ -44,17 +41,13 @@ const TopNav = () => {
         </Link>
       </div>
 
-      <div className="row  d-flex justify-content-center align-items-center">
-        <div className="col-md-4">
-          <div className="search">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Business"
-            ></input>
-            {/* <SearchOutlined className="fa fa-search" /> */}
-          </div>
-        </div>
+      <div className="d-flex justify-content-center align-items-center w-25 col-md-12">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search"
+        ></input>
+        <SearchOutlined className="fa fa-search search-icon " />
       </div>
 
       <label htmlFor="drop" className="toggle">

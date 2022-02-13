@@ -37,7 +37,7 @@ function LocalBusiness({ businessInfo }: any) {
   };
 
   return (
-    <div className="container ">
+    <div className="container mt-4">
       <Head>
         <link rel="stylesheet" href="" />
         <meta name="description" content="Local Content" />
@@ -52,7 +52,7 @@ function LocalBusiness({ businessInfo }: any) {
           <div>
             {!user ? "Add your business" : ""}
             <Button
-              href="/local-business/add-business"
+              href={user ? "/local-business/add-business" : "/login"}
               className=" rounded"
               type="link"
             >

@@ -160,7 +160,7 @@ const GetBusinessDetails = () => {
         {images.businessLogo && Object.keys(images.businessLogo).length > 0 && (
           <>
             <Badge
-              className="d-flex flex-column  mt-3 pointer"
+              className="d-flex flex-column  mt-3 pointer w-10"
               title="remove image"
               count="x"
             >
@@ -196,7 +196,7 @@ const GetBusinessDetails = () => {
             images.artifacts.length > 0 &&
             images.artifacts.map((artifact) => (
               <div
-                className="d-flex flex-column text-center"
+                // className="d-flex flex-column text-center"
                 // onClick={() =>
                 //   handleImageRemoval("artifacts", artifact.key, artifact)
                 // }
@@ -206,7 +206,7 @@ const GetBusinessDetails = () => {
                   key={artifact.key}
                   title="remove image"
                   count="x"
-                  className="pointer"
+                  className=" mt-3 pointer w-10"
                 >
                   <Avatar size={80} src={`${artifact.Location}`} />
                 </Badge>
@@ -224,44 +224,16 @@ const GetBusinessDetails = () => {
       </Form.Item>
 
       <Form.Item label="Contact" style={{ marginBottom: 0 }}>
-        <Form.Item
-          name="phone"
-          rules={[{ required: true }]}
-          style={{ display: "inline-block", width: "calc(50% - 8px)" }}
-        >
+        <Form.Item name="phone" rules={[{ required: true }]}>
           <Input placeholder="Input phone number" />
         </Form.Item>
-        <Form.Item
-          name="email"
-          rules={[{ required: true }]}
-          style={{
-            display: "inline-block",
-            width: "calc(50% - 8px)",
-            margin: "0 8px",
-          }}
-        >
+        <Form.Item name="email" rules={[{ required: true }]}>
           <Input placeholder="Input email" />
         </Form.Item>
-        <Form.Item
-          name="address"
-          rules={[{ required: true }]}
-          style={{
-            display: "inline-block",
-            width: "calc(50% - 8px)",
-            margin: "0 8px",
-          }}
-        >
+        <Form.Item name="address" rules={[{ required: true }]}>
           <Input placeholder="Input address" />
         </Form.Item>
-        <Form.Item
-          name="website"
-          rules={[{ required: true }]}
-          style={{
-            // display: "inline-block"
-            width: "calc(50% - 8px)",
-            margin: "0 8px",
-          }}
-        >
+        <Form.Item name="website" rules={[{ required: true }]}>
           <Input placeholder="Input web-address" />
         </Form.Item>
       </Form.Item>
@@ -331,7 +303,6 @@ const GetBusinessDetails = () => {
             {images.owners[0] &&
               images.owners.map((owner) => (
                 <div
-                  className="d-flex flex-column text-center"
                   // onClick={() =>
                   //   handleImageRemoval("owners", owner.avatar.key, owner.avatar)
                   // }
@@ -341,7 +312,7 @@ const GetBusinessDetails = () => {
                     key={owner.Key}
                     title="remove image"
                     count="x"
-                    className="pointer"
+                    className="pointer mt-3 w-10"
                   >
                     <Avatar size={80} src={`${owner.Location}`} />
                     <p>{owner.Key}</p>

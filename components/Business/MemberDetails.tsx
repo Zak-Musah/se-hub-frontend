@@ -11,7 +11,7 @@ const MemberDetails: NextPage<{ owners: Owner[] }> = ({ owners }) => {
       {owners &&
         owners.map((owner, idx) => (
           <div
-            className="d-flex flex-column text-center align-items-center"
+            className="d-flex flex-column text-center justify-content-center"
             key={owner.avatar.key}
           >
             <img

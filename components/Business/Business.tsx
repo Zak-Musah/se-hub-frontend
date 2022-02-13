@@ -24,8 +24,8 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
 
             <div className="">
               <Link href={`/local-business/${business._id}`}>
-                <a href="#" className="float-start fs-5 fw-bold pe-auto">
-                  Details
+                <a href="#" className="float-start fs-5 fw-light pe-auto">
+                  See More
                 </a>
               </Link>
               <img
@@ -56,7 +56,7 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
         <div>
           <p>
             <a href="#" className="float-start fs-5 fw-bold pe-auto">
-              Details
+              See More
             </a>
           </p>
           <img
@@ -68,56 +68,6 @@ const Business: NextPage<{ selectedBusiness: BusinessInfo[] }> = ({
             width={40}
             height={40}
             src="https://assets.codepen.io/2301174/icon-team-builder.svg"
-            alt=""
-            className="float-end"
-          />
-        </div>
-      </div>
-      <div className={`p-3 m-3 rounded-3 shadow ${styles.card}`}>
-        <h2 className="fs-3 text-truncate">Test Fashion 1</h2>
-        <p className={`h-50 ${styles.truncate} fw-normal fst-italic`}>
-          Regularly evaluates our talent to ensure quality and accountabilit
-        </p>
-        <div>
-          <p>
-            <a href="#" className="float-start fs-5 fw-bold pe-auto">
-              Details
-            </a>
-          </p>
-          <img
-            style={{
-              borderRadius: "90%",
-              objectFit: "cover",
-              marginRight: "20px",
-            }}
-            width={40}
-            height={40}
-            src="https://assets.codepen.io/2301174/icon-karma.svg"
-            alt=""
-            className="float-end"
-          />
-        </div>
-      </div>
-      <div className={`p-3 m-3 rounded-3 shadow ${styles.card}`}>
-        <h2 className="fs-3 text-truncate">Test Fashion 2</h2>
-        <p className={`h-50 ${styles.truncate} fw-normal fst-italic`}>
-          Regularly evaluates our talent to ensure quality and accountabilit
-        </p>
-        <div>
-          <p>
-            <a href="#" className="float-start fs-5 fw-bold pe-auto">
-              Details
-            </a>
-          </p>
-          <img
-            style={{
-              borderRadius: "90%",
-              objectFit: "cover",
-              marginRight: "20px",
-            }}
-            width={40}
-            height={40}
-            src="https://assets.codepen.io/2301174/icon-karma.svg"
             alt=""
             className="float-end"
           />
