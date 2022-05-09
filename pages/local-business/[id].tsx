@@ -18,7 +18,7 @@ export const getStaticPaths = async () => {
       } || []
     );
   });
-  return { paths, fallback: false };
+  return { paths, fallback: 'blocking' };
 };
 
 ///how html pages to generate above
@@ -33,7 +33,7 @@ export const getStaticProps = async ({
   );
   let results = data.filter((item) => item._id === params.id);
   return {
-    props: { selectedBusiness: results },
+    props: { selectedBusiness: results }, revalidate: 60 * 5,
   };
 };
 
